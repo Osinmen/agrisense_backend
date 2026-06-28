@@ -35,7 +35,6 @@ def build_exog_list(future_dates: pd.DatetimeIndex,
                     solar_radiation: Optional[List[float]],
                     pressure: Optional[List[float]]) -> List[dict]:
     exog_list = []
-
     for i, dt in enumerate(future_dates):
         clim = climatology_service.get_exog_for_month(dt.month)
 
@@ -53,7 +52,6 @@ def build_exog_list(future_dates: pd.DatetimeIndex,
         exog_list.append(exog)
 
     return exog_list
-
 
 def recursive_forecast(future_dates: pd.DatetimeIndex,
                        exog_list: List[dict]) -> List[float]:

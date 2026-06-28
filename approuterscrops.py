@@ -1,4 +1,4 @@
-﻿import logging
+import logging
 from fastapi import APIRouter, HTTPException
 from app.data.crop_params import CROP_PARAMS, CROP_ADVICE, PEST_DATABASE
 

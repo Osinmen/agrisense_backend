@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     DEBUG: bool = True
     TARGET_COL: str = 'Rainfall_mm_per_month'
     DATE_COL: str = 'DATE'
-    N_LAGS: int = 6
+    N_LAGS: int = 12
     EXOG_FEATURES: list = [
         'Temperature_Celsius',
         'Relative_Humidity_percent',
