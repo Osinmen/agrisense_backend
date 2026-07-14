@@ -12,5 +12,5 @@ def health_check():
         'api': 'AgriSense',
         'model_loaded': model_service.is_loaded,
         'climatology_loaded': climatology_service.is_loaded,
-        'model': 'CatBoost Multivariate (cat_mul.cbm)',
+        'model': 'CatBoost Multivariate (cat_mul_new.cbm)',
     }

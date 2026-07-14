@@ -12,10 +12,6 @@ logger = logging.getLogger(__name__)
 
 
 def generate_future_dates(last_date, n_months: int) -> pd.DatetimeIndex:
-    """
-    Generates future dates starting from NEXT month.
-    If today is May 2026 and n_months=3, returns June, July, August 2026.
-    """
     today = datetime.now()
     if today.month == 12:
         start_date = today.replace(year=today.year + 1, month=1, day=1)
@@ -44,10 +40,10 @@ def build_exog_list(future_dates: pd.DatetimeIndex,
             return clim[key]
 
         exog = {
-            'Temperature_Celsius'            : _get(temperature,    'Temperature_Celsius'),
-            'Relative_Humidity_percent'      : _get(humidity,       'Relative_Humidity_percent'),
-            'Solar_Radiation_MJ_m2_per_month': _get(solar_radiation,'Solar_Radiation_MJ_m2_per_month'),
-            'Surface_Pressure_hPa'           : _get(pressure,       'Surface_Pressure_hPa'),
+            'Temperature_Celsius'            : _get(temperature,     'Temperature_Celsius'),
+            'Relative_Humidity_percent'      : _get(humidity,        'Relative_Humidity_percent'),
+            'Solar_Radiation_MJ_m2_per_month': _get(solar_radiation, 'Solar_Radiation_MJ_m2_per_month'),
+            'Surface_Pressure_hPa'           : _get(pressure,        'Surface_Pressure_hPa'),
         }
         exog_list.append(exog)
 
@@ -55,22 +51,47 @@ def build_exog_list(future_dates: pd.DatetimeIndex,
 
 def recursive_forecast(future_dates: pd.DatetimeIndex,
                        exog_list: List[dict]) -> List[float]:
-    history = climatology_service.get_rainfall_history()
-    predictions = []
+    history           = climatology_service.get_rainfall_history()
+    climatology_means = climatology_service.get_monthly_means()
+    climatology_stds  = climatology_service.get_monthly_stds()
+    predictions       = []
 
     for i, dt in enumerate(future_dates):
         row = build_single_row_features(
-            history=history,
-            month=dt.month,
-            year=dt.year,
-            exog_values=exog_list[i],
-            n_lags=settings.N_LAGS
+            history            = history,
+            month              = dt.month,
+            year               = dt.year,
+            exog_values        = exog_list[i],
+            n_lags             = settings.N_LAGS,
+            climatology_means  = climatology_means,
+            climatology_stds   = climatology_stds,
         )
 
         X_row = pd.DataFrame([row])[model_service.feature_cols]
-        pred = model_service.predict(X_row)
+        pred  = model_service.predict(X_row)
+
+        # Dynamic Z-score bounding with macro-seasonal adaptive multipliers
+        month_mean = climatology_means[dt.month]
+        month_std  = climatology_stds[dt.month]
+
+        # Tiered climatological grouping based on mean monthly rainfall volume
+        if month_mean < 50.0:
+            multiplier = 0.2      # Deep Dry Season (Dec, Jan, Feb)
+        elif month_mean < 100.0:
+            multiplier = 0.5      # Seasonal Transition Months (Nov, Mar)
+        else:
+            multiplier = 1.5      # Main Wet Season (Apr to Oct)
+
+        dynamic_cap   = month_mean + (multiplier * month_std)
+        dynamic_floor = max(0.0, month_mean - (multiplier * month_std))
+
+        pred = float(np.clip(pred, dynamic_floor, dynamic_cap))
+
         predictions.append(round(pred, 2))
         history.append(pred)
-        logger.debug(f'{dt.strftime("%b %Y")} predicted: {pred:.2f} mm')
+        logger.info(
+            f'{dt.strftime("%b %Y")} | mean={month_mean:.1f} std={month_std:.1f} '
+            f'floor={dynamic_floor:.1f} cap={dynamic_cap:.1f} raw_pred={pred:.1f}'
+        )
 
     return predictions

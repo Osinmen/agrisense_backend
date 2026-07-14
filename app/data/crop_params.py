@@ -184,13 +184,16 @@ CROP_ADVICE = {
         'season' : 'Dry Season',
         'crops'  : ['Cowpea', 'Millet', 'Sorghum', 'Groundnut',
                     'Tomato', 'Pepper', 'Onion'],
-        'avoid'  : ['Rice', 'Yam', 'Cassava', 'Cocoa',
-                    'Rubber', 'Oil Palm'],
+        'avoid'  : ['Rice', 'Yam', 'Cassava', 'Cocoa', 'Rubber', 'Oil Palm'],
         'advice' : (
-            'Dry conditions expected. Plant drought-tolerant crops. '
-            'Use mulching to conserve soil moisture. '
-            'Tomato, pepper and onion thrive in dry season with irrigation. '
-            'Do NOT establish new cocoa, rubber or oil palm.'
+            'This is the dry season. Rainfall is very low this month. '
+            'DO NOT plant water-loving crops like cassava, yam or rice — '
+            'they will fail. If you have access to irrigation, this is '
+            'the best time to grow tomato, pepper and onion which fetch '
+            'high market prices in dry season. '
+            'Cowpea, millet and groundnut can survive with little rain. '
+            'Focus on harvesting any existing crops and preparing your '
+            'land for the coming rainy season.'
         ),
     },
     'Moderate': {
@@ -200,10 +203,13 @@ CROP_ADVICE = {
                     'Plantain', 'Cassava', 'Oil Palm'],
         'avoid'  : ['Rice', 'Onion', 'Tomato'],
         'advice' : (
-            'Good planting conditions for most staple crops. '
-            'Ideal for maize and legumes. '
-            'Oil palm establishment suitable this period. '
-            'Cocoa farms in maintenance — monitor for black pod disease.'
+            'Rainfall is moderate this month, good conditions are '
+            'building up. This is the right time to plant maize, '
+            'groundnut and cowpea. Your cassava and plantain will '
+            'do well. Do NOT plant rice yet — it needs heavier rain. '
+            'Avoid onion and tomato — too much moisture will cause rot. '
+            'This is also a good time to apply fertilizer to crops '
+            'already in the ground.'
         ),
     },
     'High': {
@@ -213,10 +219,14 @@ CROP_ADVICE = {
                     'Maize', 'Cocoa', 'Rubber', 'Oil Palm'],
         'avoid'  : ['Groundnut', 'Millet', 'Onion', 'Tomato', 'Pepper'],
         'advice' : (
-            'Peak wet season. Excellent for high-water crops. '
-            'Best period for cocoa and rubber establishment in Ondo State. '
-            'Monitor for fungal diseases. '
-            'Avoid vegetables — excess rain causes rot and disease.'
+            'This is peak rainy season excellent conditions for farming. '
+            'Cassava, yam and rice will thrive this month. '
+            'If you have cocoa or rubber farms, this is the best time '
+            'to establish new ones. '
+            'Watch out for fungal diseases — the high humidity encourages '
+            'black pod in cocoa and leaf blight in rubber. '
+            'DO NOT plant groundnut, millet or vegetables — '
+            'excess rain will cause them to rot or fail.'
         ),
     },
     'Very High': {
@@ -226,14 +236,17 @@ CROP_ADVICE = {
         'avoid'  : ['Maize', 'Yam', 'Groundnut', 'Cowpea',
                     'Cocoa', 'Tomato', 'Pepper', 'Onion', 'Rice'],
         'advice' : (
-            'Flood risk. Avoid planting in low-lying areas. '
-            'Ensure drainage channels are cleared. '
-            'Only flood-tolerant crops recommended. '
-            'Apply copper-based fungicide on cocoa farms immediately.'
+            'WARNING: Extremely heavy rainfall expected this month. '
+            'Flood risk is HIGH — avoid planting in low-lying areas. '
+            'Clear your drainage channels immediately. '
+            'Only cassava, plantain and rubber can handle this level '
+            'of rainfall. All other crops risk total loss. '
+            'If you have cocoa farms, apply copper-based fungicide '
+            'immediately to prevent black pod disease. '
+            'Do not harvest yam or root crops during peak flooding.'
         ),
     },
 }
-
 
 # Common pests and diseases for Ondo State
 PEST_DATABASE = {

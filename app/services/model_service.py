@@ -10,6 +10,8 @@ FEATURE_COLS = [
     'quarter',
     'year',
     'is_dry_season',
+    'is_peak_wet',
+    'is_onset_wet',
     'month_sin',
     'month_cos',
     'rain_lag_1',
@@ -18,13 +20,23 @@ FEATURE_COLS = [
     'rain_lag_4',
     'rain_lag_5',
     'rain_lag_6',
+    'rain_lag_7',
+    'rain_lag_8',
+    'rain_lag_9',
+    'rain_lag_10',
+    'rain_lag_11',
+    'rain_lag_12',
     'rain_roll3_mean',
     'rain_roll6_mean',
     'rain_roll3_std',
     'rain_roll3_min',
     'rain_roll3_max',
-    'rain_lag_12',
-    'rain_lag_24',
+    'rain_lag_24',       # added this lag and removed the 12
+    'month_clim_mean',
+    'month_clim_std',
+    'rain_anomaly',
+    'rain_trend',
+    'rain_trend_3',
     'Temperature_Celsius',
     'Relative_Humidity_percent',
     'Solar_Radiation_MJ_m2_per_month',
@@ -34,25 +46,20 @@ FEATURE_COLS = [
 
 class ModelService:
     def __init__(self):
-        self.model = None
+        self.model        = None
         self.feature_cols = FEATURE_COLS
-        self._loaded = False
+        self._loaded      = False
 
     def load(self):
-        model_dir = Path(settings.MODEL_DIR)
+        model_dir  = Path(settings.MODEL_DIR)
+        model_path = model_dir / 'cat_mul_new.cbm'
 
         if not model_dir.exists():
             raise FileNotFoundError(
-                f'Model directory not found: {model_dir}. '
-                f'Ensure trained_models/ folder exists.'
-            )
-
-        model_path = model_dir / 'cat_mul.cbm'
+                f'Model directory not found: {model_dir}.')
         if not model_path.exists():
             raise FileNotFoundError(
-                f'Model file not found: {model_path}. '
-                f'Place cat_mul.cbm inside trained_models/ folder.'
-            )
+                f'Model file not found: {model_path}.')
 
         try:
             self.model = CatBoostRegressor()
