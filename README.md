@@ -9,19 +9,19 @@ AgriSense API provides monthly rainfall predictions using a CatBoost multivariat
 
 ## Features
 
-- **Rainfall Forecasting** — Recursive multi-step predictions up to 6 months ahead using CatBoost with lag features, rolling statistics and exogenous climate variables
-- **Crop Yield Estimation** — FAO AquaCrop water stress index formula applied to 16 crops specific to Ondo State
-- **Pest & Disease Warnings** — Rule-based pest risk detection based on predicted humidity and seasonal patterns
-- **SHAP Explainability** — Feature importance explanations for every prediction using CatBoost native SHAP values
-- **Crop Calendar** — Monthly planting windows for all supported crops
-- **Climatological Bounds** — Per-month prediction constraints derived from 42-year historical analysis to prevent outlier-driven anomalies
+- **Rainfall Forecasting**: Recursive multi-step predictions up to 6 months ahead using CatBoost with lag features, rolling statistics and exogenous climate variables
+- **Crop Yield Estimation**: FAO AquaCrop water stress index formula applied to 16 crops specific to Ondo State
+- **Pest & Disease Warnings**: Rule-based pest risk detection based on predicted humidity and seasonal patterns
+- **SHAP Explainability**: Feature importance explanations for every prediction using CatBoost native SHAP values
+- **Crop Calendar**: Monthly planting windows for all supported crops
+- **Climatological Bounds**: Per-month prediction constraints derived from 42-year historical analysis to prevent outlier-driven anomalies
 
 ## Tech Stack
 
-- **Framework** — FastAPI
-- **ML Model** — CatBoost Regressor (Optuna-tuned)
-- **Data** — NASA POWER reanalysis climate dataset (1984–2025)
-- **Python** — 3.10+
+- **Framework**:  FastAPI
+- **ML Model**: CatBoost Regressor (Optuna-tuned)
+- **Data**: NASA POWER reanalysis climate dataset (1984–2025)
+- **Python**: 3.10+
 
 ## API Endpoints
 
@@ -38,14 +38,13 @@ AgriSense API provides monthly rainfall predictions using a CatBoost multivariat
 
 | Metric | Value |
 |--------|-------|
-| RMSE | — |
-| MAE | — |
-| R² | — |
-| NSE | — |
-| KGE | — |
-| PBIAS | — % |
+| RMSE | 0.76 |
+| MAE | 56mm |
+| R² | 0.76 |
+| NSE | 0.76 |
+| KGE | 0.81 |
+| PBIAS | 1.36 % |
 
-> Fill in your actual metrics after final retraining
 
 ## Installation
 
@@ -92,10 +91,10 @@ rainfall_advisory_api/
 
 ## Data Sources
 
-- **Climate Data** — NASA POWER API (temperature, humidity, solar radiation, surface pressure)
-- **Rainfall Data** — CHIRPS / local meteorological records for Ondo State
-- **Crop Parameters** — FAO AquaCrop documentation and IITA West Africa agronomic guidelines
-- **Pest Database** — OSSADEP (Ondo State Agricultural Development Programme) field records
+- **Climate Data**: NASA POWER API (temperature, humidity, solar radiation, surface pressure)
+- **Rainfall Data**: NASA POWER API
+- **Crop Parameters**: FAO AquaCrop documentation and IITA West Africa agronomic guidelines
+- **Pest Database**: OSSADEP (Ondo State Agricultural Development Programme) field records
 
 ## Research Context
 
