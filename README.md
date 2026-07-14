@@ -17,43 +17,26 @@ A key innovation is the **Macro-Seasonal Adaptive Winsorization Pipeline (MSAW)*
 
 ---
 
-## 🏗️ System Architecture
-┌─────────────────────────────────────────────────────────────┐
-│                    Flutter Mobile App                        │
-│         (English + Yoruba | iOS + Android)                  │
-│                                                             │
-│   ┌─────────────────┐    ┌──────────────────────────────┐  │
-│   │ OpenMeteo API   │    │  AgriSense FastAPI Backend   │  │
-│   │ (Daily Weather) │    │  (Seasonal ML Forecast)      │  │
-│   └─────────────────┘    └──────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────┘
-│
-┌──────────────▼──────────────┐
-│      FastAPI Backend         │
-│                             │
-│  ┌─────────────────────┐    │
-│  │  CatBoost Model     │    │
-│  │  (.cbm artefact)    │    │
-│  └──────────┬──────────┘    │
-│             │               │
-│  ┌──────────▼──────────┐    │
-│  │   MSAW Layer        │    │
-│  │ (Post-Processing)   │    │
-│  └──────────┬──────────┘    │
-│             │               │
-│  ┌──────────▼──────────┐    │
-│  │  Advisory Engine    │    │
-│  │  (Crop + Pest +     │    │
-│  │   Yield Rules)      │    │
-│  └──────────┬──────────┘    │
-│             │               │
-│  ┌──────────▼──────────┐    │
-│  │  Firebase Firestore  │    │
-│  │  + Local Push       │    │
-│  │  Notifications      │    │
-│  └─────────────────────┘    │
-└─────────────────────────────┘
----
+The system follows a three-tier architecture:
+
+**Tier 1 — Mobile Frontend (Flutter)**
+- Cross-platform iOS and Android application
+- English and Yoruba language support
+- OpenMeteo API integration for real-time daily weather display
+- AgriSense seasonal forecast and advisory display
+
+**Tier 2 — FastAPI Backend (This Repository)**
+- CatBoost Multivariate model inference
+- MSAW post-processing layer
+- Crop advisory and yield estimation engine
+- Firebase Firestore data persistence
+- Monthly scheduled forecast generation with local push notification trigger
+
+**Tier 3 — Data and Storage Layer**
+- NASA POWER climate data (training source)
+- Firebase Firestore (forecast and advisory storage)
+- CatBoost model artefact (.cbm file)
+- 42-year historical climate dataset (inference context)
 
 ## 🤖 Model Performance
 
